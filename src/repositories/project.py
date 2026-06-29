@@ -4,16 +4,22 @@ from src.schemas.project import ProjectCreate, ProjectUpdate
 from typing import List
 
 class ProjectRepository:
+    """
+    Data access layer for Project entities.
+    """
     def __init__(self, db: Session):
         self.db = db
 
     def get_by_id(self, project_id: int) -> Project | None:
+        """Retrieve a project by its primary key ID."""
         return self.db.query(Project).filter(Project.id == project_id).first()
 
     def get_all_by_owner(self, owner_id: int) -> List[Project]:
+        """Retrieve all projects owned by a specific user."""
         return self.db.query(Project).filter(Project.owner_id == owner_id).all()
 
     def create(self, project_in: ProjectCreate, owner_id: int) -> Project:
+        """Create a new project record in the database."""
         db_project = Project(
             name=project_in.name,
             description=project_in.description,
@@ -25,6 +31,7 @@ class ProjectRepository:
         return db_project
 
     def update(self, db_project: Project, project_in: ProjectUpdate) -> Project:
+        """Update an existing project record."""
         if project_in.name is not None:
             db_project.name = project_in.name
         if project_in.description is not None:
@@ -36,5 +43,6 @@ class ProjectRepository:
         return db_project
 
     def delete(self, db_project: Project) -> None:
+        """Delete a project record from the database."""
         self.db.delete(db_project)
         self.db.commit()

@@ -4,13 +4,19 @@ from src.schemas.user import UserCreate
 from src.core.security import get_password_hash
 
 class UserRepository:
+    """
+    Data access layer for User entities.
+    Handles direct interaction with the database for user-related queries.
+    """
     def __init__(self, db: Session):
         self.db = db
 
     def get_by_email(self, email: str) -> User | None:
+        """Retrieve a user by their email address."""
         return self.db.query(User).filter(User.email == email).first()
 
     def create(self, user_in: UserCreate) -> User:
+        """Create a new user record in the database."""
         db_user = User(
             email=user_in.email,
             password_hash=get_password_hash(user_in.password)

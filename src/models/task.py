@@ -4,13 +4,17 @@ from sqlalchemy.orm import relationship
 from src.database import Base
 
 class TaskStatus(str, enum.Enum):
+    """Enumeration representing the current progress status of a task."""
     TODO = "TODO"
     IN_PROGRESS = "IN_PROGRESS"
     DONE = "DONE"
 
 class Task(Base):
+    """
+    SQLAlchemy model representing a task in the database.
+    A task must belong to a specific project.
+    """
     __tablename__ = "tasks"
-
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     description = Column(String)

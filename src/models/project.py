@@ -3,6 +3,10 @@ from sqlalchemy.orm import relationship
 from src.database import Base
 
 class Project(Base):
+    """
+    SQLAlchemy model representing a project in the database.
+    A project belongs to a user (owner) and contains multiple tasks.
+    """
     __tablename__ = "projects"
 
     id = Column(Integer, primary_key=True, index=True)

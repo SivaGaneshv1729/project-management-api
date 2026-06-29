@@ -4,6 +4,10 @@ from sqlalchemy.sql import func
 from src.database import Base
 
 class User(Base):
+    """
+    SQLAlchemy model representing a user in the database.
+    Users can authenticate using their email and own multiple projects.
+    """
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
